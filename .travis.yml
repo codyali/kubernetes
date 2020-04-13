@@ -6,11 +6,11 @@ env:
     - SHA=$(git rev-parse HEAD)
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-  - curl https://sdk.cloud.google.com | bash;
+  - curl https://sdk.cloud.google.com | bash >/tmp/output.txt;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
-  - gcloud auth activate-service-account --key-file service-account.json.enc
   - openssl aes-256-cbc -K $encrypted_0003abb1a56b_key -iv $encrypted_0003abb1a56b_iv -in service-account.json.enc -out service-account.json -d
+  - gcloud auth activate-service-account --key-file service-account.json
   - gcloud config set project multi-k8s-274102
   - gcloud config set compute/zone australia-southeast1-a
   - gcloud container clusters get-credentials multi-cluster
